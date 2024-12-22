@@ -80,7 +80,7 @@ GRAPHQL_SERVER_PORT=8080
 
 **REST**
 - GET /order
-- POST /orde
+- POST /order
 
 **GraphQL**
 - Query `ListOrders`
