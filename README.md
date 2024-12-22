@@ -49,7 +49,7 @@ Para criar as migrações para o bando de dados acesse o diretório raiz `~clean
 ```bash
  migrate create -ext=sql -dir=sql/migrations -seq init
 
-  migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/courses" up
+  migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/orders" up
 ```
 
 ## Ambiente de desenvolvimento
