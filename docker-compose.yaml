@@ -24,3 +24,34 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  migrate:
+    image: migrate/migrate
+    container_name: migrate
+    command: -path=sql/migrations -database "mysql://root:root@tcp(mysql:3306)/orders" up
+    volumes:
+      - ./sql/migrations:/sql/migrations
+    depends_on:
+      - mysql
+  
+  app:
+    build: .
+    image: manueldembo/ordersystem:latest
+    container_name: app
+    restart: always
+    command: >
+      dockerize
+      -wait tcp://mysql:3306
+      -wait tcp://rabbitmq:5672
+      -timeout 30s
+      ./ordersystem
+    ports:
+      - 8000:8000
+      - 50051:50051
+      - 8080:8080
+    depends_on:
+      - mysql
+      - rabbitmq
+    environment:
+      DATABASE_URL: mysql://root:root@mysql:3306/mydb
+      RABBITMQ_URL: amqp://rabbitmq:5672
