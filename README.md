@@ -16,47 +16,14 @@ Certifique-se de ter o GO instalado em sua máquina, de preferência a versão 1
 
 **Docker**
 
-O projecto faz uso do Docker para trabalhar com banco de dados e os serviços do RabbitMQ então certifique-se de ter o Docker instalado em sua máquina, de preferência a versão mais atualizada. Se você não tiver o Docker instalado em sua máquina, você pode fazer isso, consultando a [documentação do Docker](https://docs.docker.com/desktop/) e seguindo os passos para a instalação do mesmo.
+O projeto faz uso do Docker para trabalhar com banco de dados, serviços do RabbitMQ e para executar a própria aplicação  então certifique-se de ter o Docker instalado em sua máquina, de preferência a versão mais atualizada. Se você não tiver o Docker instalado em sua máquina, você pode fazer isso, consultando a [documentação do Docker](https://docs.docker.com/desktop/) e seguindo os passos para a instalação do mesmo.
 
-## Instalação
+### Executando a aplicação
 
-O projeto utiliza bibliotecas externas então, certifique-se de instalar as dependências. Acesse o diretório raiz no terminal e execute o comando abaixo:
-
-```bash
-
-git clone https://github.com/manueldembo/clean_architecture.git
-
-cd clean_architecture
-
-go mod tidy
-
-```
-
-### Docker-Compose
-
-Para iniciar o banco de dados e os serviços do RabbitMQ acesse o diretório raiz `~clean_architecture`, acesse o terminal e execute o comando abaixo:
-
+Para iniciar a aplicação `~clean_architecture`, acesse o terminal e execute o comando abaixo:
 
 ```bash
  docker-compose up -d
-```
-
-### Migrações
-
-Para criar as migrações para o bando de dados acesse o diretório raiz `~clean_architecture`, acesse o terminal e execute o comando abaixo antes de executar a aplicação:
-
-
-```bash
- migrate -path=sql/migrations -database "mysql://root:root@tcp(localhost:3306)/orders" -verbose up
-```
-
-## Ambiente de desenvolvimento
-
-Após concluir o processo de instalação, acesse terminal no diretório `cmd/ordersystem/` e execute o comando abaixo para iniciar os servidor.
-
-
-```bash
- go run main.go wire_gen.go
 ```
 
 ### Nota!
@@ -65,14 +32,15 @@ Para garantir que aplicação será apresentada como esperado você precisa gara
 
 ```bash
 DB_DRIVER=mysql
-DB_HOST=localhost
+DB_HOST=mysql
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=root
 DB_NAME=orders
-WEB_SERVER_PORT=:8000
+WEB_SERVER_PORT=8000
 GRPC_SERVER_PORT=50051
 GRAPHQL_SERVER_PORT=8080
+RABBITMQ_HOST=rabbitmq
 ```
 
 
