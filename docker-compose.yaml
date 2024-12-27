@@ -28,7 +28,15 @@ services:
   migrate:
     image: migrate/migrate
     container_name: migrate
-    command: -path=sql/migrations -database "mysql://root:root@tcp(mysql:3306)/orders" up
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        until nc -z mysql 3306; do
+          sleep 1
+        done
+        /migrate -path=sql/migrations -database "mysql://root:root@tcp(mysql:3306)/orders" up
+    # command: -path=sql/migrations -database "mysql://root:root@tcp(mysql:3306)/orders" up
     volumes:
       - ./sql/migrations:/sql/migrations
     depends_on:
